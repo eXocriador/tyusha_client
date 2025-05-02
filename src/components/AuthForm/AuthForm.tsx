@@ -3,6 +3,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { login, register } from "../../api/auth";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   type: "login" | "register";
@@ -15,6 +16,7 @@ const isValidEmail = (email: string) => {
 };
 
 const AuthForm = ({ type }: Props) => {
+  const navigate = useNavigate(); // ❗ Переніс всередину компонента
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,6 +41,7 @@ const AuthForm = ({ type }: Props) => {
         const data = await login(email, password);
         console.log("Login успішний", data);
         toast.success("Успішний вхід!");
+        navigate("/dashboard"); // редірект!
       } else {
         const data = await register(email, password);
         console.log("Реєстрація успішна", data);
@@ -54,7 +57,7 @@ const AuthForm = ({ type }: Props) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <Input
-        type="text" // важливо: щоб браузер не виводив своє повідомлення
+        type="text"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
