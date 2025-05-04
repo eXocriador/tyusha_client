@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/auth"; // змінити на свій бекенд
+const API_URL = "https://tyusha-server.onrender.com/api/auth"; // змінити на свій бекенд
 
 export const login = async (email: string, password: string) => {
   const response = await axios.post(`${API_URL}/login`, { email, password });

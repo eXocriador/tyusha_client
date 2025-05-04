@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { login, register } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 type Props = {
   type: "login" | "register";
@@ -16,10 +17,12 @@ const isValidEmail = (email: string) => {
 };
 
 const AuthForm = ({ type }: Props) => {
-  const navigate = useNavigate(); // ❗ Переніс всередину компонента
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { setToken } = useAuthStore(); // <<< ВАЖЛИВО!
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,15 +43,25 @@ const AuthForm = ({ type }: Props) => {
       if (type === "login") {
         const data = await login(email, password);
         console.log("Login успішний", data);
-        toast.success("Успішний вхід!");
-        navigate("/dashboard"); // редірект!
+
+        if (data.token) {
+          setToken(data.token); // <<< БЕЗ ЦЬОГО НЕ ПРАЦЮЄ!
+          toast.success("Успішний вхід!");
+          navigate("/dashboard");
+        } else {
+          toast.error("Сервер не повернув токен");
+        }
       } else {
         const data = await register(email, password);
         console.log("Реєстрація успішна", data);
-        toast.success("Успішна реєстрація!");
+        toast.success("Успішна реєстрація! Можете увійти.");
+        navigate("/login");
       }
-    } catch (error) {
-      toast.error("Сталася помилка. Спробуйте ще раз.");
+    } catch (error: any) {
+      console.error("Помилка:", error);
+      toast.error(
+        error?.response?.data?.message || "Сталася помилка. Спробуйте ще раз."
+      );
     } finally {
       setIsSubmitting(false);
     }

@@ -1,23 +1,36 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
-const Navbar = () => {
+const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { token, setToken } = useAuthStore();
+
+  const logout = () => {
+    setToken(null);
+    navigate("/");
+  };
 
   const navItems = [
     { path: "/", label: "Головна" },
-    { path: "/login", label: "Увійти" },
-    { path: "/register", label: "Реєстрація" }
+    { path: "/dashboard", label: "Кабінет" },
+    ...(token
+      ? []
+      : [
+          { path: "/login", label: "Увійти" },
+          { path: "/register", label: "Реєстрація" }
+        ])
   ];
 
   return (
-    <nav className="flex items-center justify-between px-4 py-3 border-b shadow-sm">
+    <nav className="flex items-center justify-between px-4 py-3 border-b shadow-sm relative">
       <Link to="/" className="text-xl font-bold">
         Tyusha
       </Link>
 
-      <div className="hidden md:flex space-x-4">
+      <div className="hidden md:flex space-x-4 items-center">
         {navItems.map(({ path, label }) => (
           <Link
             key={path}
@@ -31,6 +44,15 @@ const Navbar = () => {
             {label}
           </Link>
         ))}
+
+        {token && (
+          <button
+            onClick={logout}
+            className="ml-4 text-red-500 hover:underline"
+          >
+            Вийти
+          </button>
+        )}
       </div>
 
       {/* Бургер для мобільних */}
@@ -64,7 +86,7 @@ const Navbar = () => {
 
       {/* Випадаюче меню для мобіли */}
       {menuOpen && (
-        <div className="absolute top-14 left-0 w-full bg-white border-t shadow-md md:hidden">
+        <div className="absolute top-14 left-0 w-full bg-white border-t shadow-md md:hidden flex flex-col">
           {navItems.map(({ path, label }) => (
             <Link
               key={path}
@@ -79,10 +101,21 @@ const Navbar = () => {
               {label}
             </Link>
           ))}
+          {token && (
+            <button
+              onClick={() => {
+                setMenuOpen(false);
+                logout();
+              }}
+              className="block px-4 py-2 text-red-500 text-left"
+            >
+              Вийти
+            </button>
+          )}
         </div>
       )}
     </nav>
   );
 };
 
-export default Navbar;
+export default NavBar;
