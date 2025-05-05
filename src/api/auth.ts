@@ -11,3 +11,13 @@ export const register = async (email: string, password: string) => {
   const response = await axios.post(`${API_URL}/register`, { email, password });
   return response.data;
 };
+
+export const googleLogin = async (googleToken: string) => {
+  const response = await axios.post(`${API_URL}/google`, { token: googleToken });
+  return response.data; // має повертати JWT токен
+};
+
+export const appleLogin = async (appleToken: string) => {
+  const response = await axios.post(`${API_URL}/apple`, { token: appleToken });
+  return response.data;
+};

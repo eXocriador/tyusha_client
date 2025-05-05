@@ -45,7 +45,8 @@ const AuthForm = ({ type }: Props) => {
         console.log("Login успішний", data);
 
         if (data.token) {
-          setToken(data.token); // <<< БЕЗ ЦЬОГО НЕ ПРАЦЮЄ!
+          setToken(data.token);
+          navigate("/dashboard"); // <<< БЕЗ ЦЬОГО НЕ ПРАЦЮЄ!
           toast.success("Успішний вхід!");
           navigate("/dashboard");
         } else {
@@ -53,9 +54,8 @@ const AuthForm = ({ type }: Props) => {
         }
       } else {
         const data = await register(email, password);
-        console.log("Реєстрація успішна", data);
-        toast.success("Успішна реєстрація! Можете увійти.");
-        navigate("/login");
+        setToken(data.token); // одразу зберігаємо токен
+        navigate("/dashboard");
       }
     } catch (error: any) {
       console.error("Помилка:", error);
