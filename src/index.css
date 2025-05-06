@@ -1,4 +1,3 @@
-/* Основний фон і текст */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
 
 @tailwind base;
@@ -34,14 +33,99 @@
   }
 }
 
+.bg-hero-pattern {
+  background-image: url("/hero-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll; /* 🛠 Виправлено щоб фон не вилазив */
+  filter: blur(2px);
+  opacity: 0.3;
+}
+
+/* Анімація для модалки */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-fadeOut {
+  animation: fadeOut 0.3s ease-in forwards;
+}
+
+.radix-dialog-overlay {
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+
+[data-state="open"] {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+[data-state="closed"] {
+  animation: fadeOut 0.2s ease-in forwards;
+}
+
+[data-state="open"] {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+[data-state="closed"] {
+  animation: fadeOut 0.2s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -52%);
+  }
+}
+
 /* GOOGLE */
 .gsi-material-button {
   background-color: #f2f2f2;
   border: none;
   border-radius: 20px;
-  box-sizing: border-box;
   color: #1f1f1f;
-  cursor: pointer;
   font-family: "Roboto", Arial, sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -51,25 +135,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  transition: background-color 0.2s, box-shadow 0.2s;
 }
 
-.gsi-material-button:hover {
-  background-color: #e6e6e6;
-}
-
-.gsi-material-button-content-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.gsi-material-button-icon {
-  height: 20px;
-  margin-right: 12px;
-  width: 20px;
-}
-
-/* APPLE */
 .apple-signin-button {
   background-color: black;
   color: white;
@@ -84,57 +151,4 @@
   justify-content: center;
   height: 48px;
   width: 100%;
-  transition: background-color 0.2s;
-}
-.apple-signin-button svg {
-  width: 24px;
-  height: 24px;
-}
-
-.apple-signin-button:hover {
-  background-color: #222;
-}
-
-.home-auth-link:hover {
-  @apply text-primary underline;
-}
-.home-auth-link:focus {
-  @apply text-primary underline;
-}
-.home-auth-link:focus-visible {
-  @apply text-primary underline;
-}
-
-.bg-hero-pattern {
-  background-image: url("/hero-background.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  filter: blur(2px);
-  opacity: 0.3;
-}
-
-/* Для виправлення блимань Hero */
-.hero-animate {
-  animation: fadeIn 1s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 0.3;
-    transform: translateY(0);
-  }
-}
-
-.radix-dialog-overlay {
-  backdrop-filter: blur(8px);
-  background-color: rgba(0, 0, 0, 0.4);
-  position: fixed;
-  inset: 0;
-  z-index: 50;
 }

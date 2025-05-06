@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import ButtonGoogle from "./ButtonGoogle";
 import ButtonApple from "./ButtonApple";
+import * as Dialog from "@radix-ui/react-dialog";
 
 type Props = {
   type: "login" | "register";
@@ -39,25 +40,22 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
     try {
       setIsSubmitting(true);
 
-      if (type === "login") {
-        const data = await login(email, password);
-        if (data.token) {
-          setToken(data.token);
-          toast.success("Успішний вхід!");
-          onClose();
-          navigate("/dashboard");
-        } else {
-          toast.error("Сервер не повернув токен");
-        }
-      } else {
-        const data = await register(email, password);
+      const data =
+        type === "login"
+          ? await login(email, password)
+          : await register(email, password);
+
+      if (data.token) {
         setToken(data.token);
-        toast.success("Реєстрація успішна!");
+        toast.success(
+          type === "login" ? "Успішний вхід!" : "Реєстрація успішна!"
+        );
         onClose();
         navigate("/dashboard");
+      } else {
+        toast.error("Сервер не повернув токен");
       }
     } catch (error: any) {
-      console.error("Помилка:", error);
       toast.error(
         error?.response?.data?.message || "Сталася помилка. Спробуйте ще раз."
       );
@@ -67,7 +65,16 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 bg-card p-6 rounded-xl shadow-lg w-full max-w-md"
+    >
+      <Dialog.Title asChild>
+        <h2 className="text-xl font-semibold text-center">
+          {type === "login" ? "Вхід" : "Реєстрація"}
+        </h2>
+      </Dialog.Title>
+
       <Input
         type="email"
         placeholder="Email"
@@ -97,7 +104,7 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
             <button
               type="button"
               onClick={() => onTypeChange("register")}
-              className="underline hover:text-primary"
+              className="underline home-auth-link"
             >
               Зареєструватися
             </button>
@@ -108,7 +115,7 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
             <button
               type="button"
               onClick={() => onTypeChange("login")}
-              className="underline hover:text-primary"
+              className="underline home-auth-link"
             >
               Увійти
             </button>
@@ -119,15 +126,14 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
       <div className="text-center text-sm text-gray-500 dark:text-gray-400">
         або продовжити через
       </div>
-      <div className="flex flex-col gap-2">
-        <ButtonGoogle
-          onClick={() => {
-            window.location.href =
-              "https://tyusha-server.onrender.com/api/auth/google/login";
-          }}
-        />
-        <ButtonApple onClick={() => toast("Apple auth ще не реалізовано")} />
-      </div>
+
+      <ButtonGoogle
+        onClick={() =>
+          (window.location.href =
+            "https://tyusha-server.onrender.com/api/auth/google/login")
+        }
+      />
+      <ButtonApple onClick={() => toast("Apple auth ще не реалізовано")} />
     </form>
   );
 };
