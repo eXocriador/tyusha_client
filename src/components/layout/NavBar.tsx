@@ -1,12 +1,14 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuthStore } from "../../hooks/useAuthStore";
+import { useTheme } from "../../hooks/useTheme";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { token, setToken } = useAuthStore();
+  const { theme, toggleTheme } = useTheme();
 
   const logout = () => {
     setToken(null);
@@ -25,7 +27,7 @@ const NavBar = () => {
   ];
 
   return (
-    <nav className="flex items-center justify-between px-4 py-3 border-b shadow-sm relative">
+    <nav className="flex items-center justify-between px-4 py-3 border-b shadow-sm relative bg-background">
       <Link to="/" className="text-xl font-bold">
         Tyusha
       </Link>
@@ -37,9 +39,9 @@ const NavBar = () => {
             to={path}
             className={`${
               location.pathname === path
-                ? "font-semibold border-b-2 border-black"
-                : "text-gray-600"
-            } hover:text-black`}
+                ? "font-semibold border-b-2 border-primary"
+                : "text-muted-foreground"
+            } hover:text-primary`}
           >
             {label}
           </Link>
@@ -55,7 +57,7 @@ const NavBar = () => {
         )}
       </div>
 
-      {/* Бургер для мобільних */}
+      {/* Mobile menu button */}
       <button
         onClick={() => setMenuOpen(!menuOpen)}
         className="md:hidden focus:outline-none"
@@ -84,9 +86,9 @@ const NavBar = () => {
         </svg>
       </button>
 
-      {/* Випадаюче меню для мобіли */}
+      {/* Mobile nav */}
       {menuOpen && (
-        <div className="absolute top-14 left-0 w-full bg-white border-t shadow-md md:hidden flex flex-col">
+        <div className="absolute top-14 left-0 w-full bg-background border-t shadow-md md:hidden flex flex-col">
           {navItems.map(({ path, label }) => (
             <Link
               key={path}
@@ -94,8 +96,8 @@ const NavBar = () => {
               onClick={() => setMenuOpen(false)}
               className={`block px-4 py-2 ${
                 location.pathname === path
-                  ? "font-semibold text-black"
-                  : "text-gray-600"
+                  ? "font-semibold text-primary"
+                  : "text-muted-foreground"
               }`}
             >
               {label}
@@ -114,6 +116,13 @@ const NavBar = () => {
           )}
         </div>
       )}
+
+      <button
+        onClick={toggleTheme}
+        className="ml-2 px-2 py-1 border rounded text-sm"
+      >
+        {theme === "light" ? "🌙" : "☀️"}
+      </button>
     </nav>
   );
 };

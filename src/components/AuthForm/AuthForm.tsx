@@ -6,6 +6,8 @@ import { login, register } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { motion } from "framer-motion";
+import { FcGoogle } from "react-icons/fc";
+import { FaApple } from "react-icons/fa";
 
 type Props = {
   type: "login" | "register";
@@ -67,13 +69,13 @@ const AuthForm = ({ type }: Props) => {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="space-y-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-md mx-auto"
+      className="space-y-4"
     >
-      <h2 className="text-2xl font-semibold text-center mb-4">
+      <h2 className="text-2xl font-bold text-center mb-4">
         {type === "login" ? "Вхід" : "Реєстрація"}
       </h2>
       <Input
-        type="text"
+        type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -94,29 +96,29 @@ const AuthForm = ({ type }: Props) => {
           : "Зареєструватися"}
       </Button>
 
-      <div className="text-center text-sm text-gray-500 mt-2">
+      <div className="text-center text-sm text-muted-foreground">
         або продовжити через
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-2">
         <Button
           type="button"
-          className="w-full"
           variant="outline"
+          className="w-full flex items-center justify-center gap-2"
           onClick={() => {
             window.location.href =
               "https://tyusha-server.onrender.com/api/auth/google/login";
           }}
         >
-          Google
+          <FcGoogle size={20} /> Google
         </Button>
         <Button
           type="button"
-          className="w-full"
           variant="outline"
+          className="w-full flex items-center justify-center gap-2"
           onClick={() => toast("Apple auth ще не реалізовано")}
         >
-          Apple
+          <FaApple size={20} /> Apple
         </Button>
       </div>
     </motion.form>
