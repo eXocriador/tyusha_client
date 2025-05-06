@@ -5,24 +5,20 @@ import { toast } from "sonner";
 import { login, register } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../hooks/useAuthStore";
+import { motion } from "framer-motion";
 
 type Props = {
   type: "login" | "register";
 };
 
-// Мінімальна перевірка email по паттерну
-const isValidEmail = (email: string) => {
-  const re = /\S+@\S+\.\S+/;
-  return re.test(email);
-};
+const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
 const AuthForm = ({ type }: Props) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const { setToken } = useAuthStore(); // <<< ВАЖЛИВО!
+  const { setToken } = useAuthStore();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,11 +38,8 @@ const AuthForm = ({ type }: Props) => {
 
       if (type === "login") {
         const data = await login(email, password);
-        console.log("Login успішний", data);
-
         if (data.token) {
           setToken(data.token);
-          navigate("/dashboard"); // <<< БЕЗ ЦЬОГО НЕ ПРАЦЮЄ!
           toast.success("Успішний вхід!");
           navigate("/dashboard");
         } else {
@@ -54,7 +47,8 @@ const AuthForm = ({ type }: Props) => {
         }
       } else {
         const data = await register(email, password);
-        setToken(data.token); // одразу зберігаємо токен
+        setToken(data.token);
+        toast.success("Реєстрація успішна!");
         navigate("/dashboard");
       }
     } catch (error: any) {
@@ -68,7 +62,16 @@ const AuthForm = ({ type }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <motion.form
+      onSubmit={handleSubmit}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="space-y-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-md mx-auto"
+    >
+      <h2 className="text-2xl font-semibold text-center mb-4">
+        {type === "login" ? "Вхід" : "Реєстрація"}
+      </h2>
       <Input
         type="text"
         placeholder="Email"
@@ -100,7 +103,10 @@ const AuthForm = ({ type }: Props) => {
           type="button"
           className="w-full"
           variant="outline"
-          onClick={() => toast("Google auth ще не реалізовано")}
+          onClick={() => {
+            window.location.href =
+              "https://tyusha-server.onrender.com/api/auth/google/login";
+          }}
         >
           Google
         </Button>
@@ -113,7 +119,7 @@ const AuthForm = ({ type }: Props) => {
           Apple
         </Button>
       </div>
-    </form>
+    </motion.form>
   );
 };
 
