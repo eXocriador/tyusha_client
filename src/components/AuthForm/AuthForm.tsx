@@ -5,20 +5,18 @@ import { toast } from "sonner";
 import { login, register } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../hooks/useAuthStore";
-import { motion } from "framer-motion";
 import ButtonGoogle from "./ButtonGoogle";
 import ButtonApple from "./ButtonApple";
 
 type Props = {
   type: "login" | "register";
+  onTypeChange: (type: "login" | "register") => void;
+  onClose: () => void;
 };
 
 const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
-// ГОЛОВНЕ! Визначаємо MotionForm
-const MotionForm = motion.form;
-
-const AuthForm = ({ type }: Props) => {
+const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,19 +44,17 @@ const AuthForm = ({ type }: Props) => {
         if (data.token) {
           setToken(data.token);
           toast.success("Успішний вхід!");
+          onClose();
           navigate("/dashboard");
         } else {
           toast.error("Сервер не повернув токен");
         }
       } else {
         const data = await register(email, password);
-        if (data.token) {
-          setToken(data.token);
-          toast.success("Реєстрація успішна!");
-          navigate("/dashboard");
-        } else {
-          toast.error("Сервер не повернув токен");
-        }
+        setToken(data.token);
+        toast.success("Реєстрація успішна!");
+        onClose();
+        navigate("/dashboard");
       }
     } catch (error: any) {
       console.error("Помилка:", error);
@@ -71,18 +67,9 @@ const AuthForm = ({ type }: Props) => {
   };
 
   return (
-    <MotionForm
-      onSubmit={handleSubmit}
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="space-y-4 bg-card p-8 rounded-xl shadow-lg w-full max-w-md"
-    >
-      <h2 className="text-2xl font-semibold text-center mb-4">
-        {type === "login" ? "Вхід" : "Реєстрація"}
-      </h2>
+    <form onSubmit={handleSubmit} className="space-y-4">
       <Input
-        type="text"
+        type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -93,11 +80,7 @@ const AuthForm = ({ type }: Props) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button
-        type="submit"
-        className="w-full text-white"
-        disabled={isSubmitting}
-      >
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
         {isSubmitting
           ? type === "login"
             ? "Входимо..."
@@ -107,7 +90,33 @@ const AuthForm = ({ type }: Props) => {
           : "Зареєструватися"}
       </Button>
 
-      <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
+      <div className="text-center text-sm text-gray-500 dark:text-gray-400">
+        {type === "login" ? (
+          <>
+            Немає акаунту?{" "}
+            <button
+              type="button"
+              onClick={() => onTypeChange("register")}
+              className="underline hover:text-primary"
+            >
+              Зареєструватися
+            </button>
+          </>
+        ) : (
+          <>
+            Вже є акаунт?{" "}
+            <button
+              type="button"
+              onClick={() => onTypeChange("login")}
+              className="underline hover:text-primary"
+            >
+              Увійти
+            </button>
+          </>
+        )}
+      </div>
+
+      <div className="text-center text-sm text-gray-500 dark:text-gray-400">
         або продовжити через
       </div>
       <div className="flex flex-col gap-2">
@@ -119,7 +128,7 @@ const AuthForm = ({ type }: Props) => {
         />
         <ButtonApple onClick={() => toast("Apple auth ще не реалізовано")} />
       </div>
-    </MotionForm>
+    </form>
   );
 };
 

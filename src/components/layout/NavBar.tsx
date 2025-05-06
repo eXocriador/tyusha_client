@@ -4,7 +4,12 @@ import { useAuthStore } from "../../hooks/useAuthStore";
 import { useTheme } from "../../hooks/useTheme";
 import { Button } from "../ui/button";
 
-const NavBar = () => {
+type Props = {
+  onAuthOpen: (open: boolean) => void;
+  onAuthTypeChange: (type: "login" | "register") => void;
+};
+
+const NavBar = ({ onAuthOpen, onAuthTypeChange }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -43,7 +48,13 @@ const NavBar = () => {
         ))}
 
         {!token ? (
-          <Button variant="outline" onClick={() => navigate("/auth")}>
+          <Button
+            variant="outline"
+            onClick={() => {
+              onAuthTypeChange("login");
+              onAuthOpen(true);
+            }}
+          >
             Вхід / Реєстрація
           </Button>
         ) : (
