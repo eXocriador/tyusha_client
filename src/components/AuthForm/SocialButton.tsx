@@ -9,21 +9,36 @@ const SocialButton = ({ provider, onClick }: SocialButtonProps) => {
 
   if (provider === "google") {
     return (
-      <button onClick={onClick} className={baseClass}>
+      <button
+        onClick={onClick}
+        className={`${baseClass} gap-3`}
+        style={{ fontFamily: "Roboto, Arial, sans-serif" }}
+      >
         <img
-          src="https://www.svgrepo.com/show/475656/google-color.svg"
+          src="/icons/google.svg"
           alt="Google"
-          className="w-5 h-5 mr-3"
+          className="w-5 h-5"
+          aria-hidden="true"
         />
-        Продовжити через Google
+        <span>Увійти через Google</span>
       </button>
     );
   }
 
   if (provider === "apple") {
     return (
-      <button onClick={onClick} className={baseClass}>
-        🍎 Продовжити через Apple
+      <button
+        onClick={onClick}
+        className={`${baseClass} gap-3`}
+        style={{ fontFamily: "-apple-system, BlinkMacSystemFont, sans-serif" }}
+      >
+        <img
+          src="/icons/apple.svg"
+          alt="Apple"
+          className="w-5 h-5"
+          aria-hidden="true"
+        />
+        <span>Увійти через Apple</span>
       </button>
     );
   }
