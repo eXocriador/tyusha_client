@@ -1,19 +1,18 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
-interface AuthState {
-  token: string | null;
-  setToken: (token: string | null) => void;
-}
-
-export const useAuthStore = create<AuthState>()(
+export const useAuthStore = create(
   persist(
     (set) => ({
-      token: null,
-      setToken: (token) => set({ token }),
+      token: null as string | null,
+      setToken: (token: string | null) => {
+        console.log("SETTING TOKEN:", token);
+        set({ token });
+      },
     }),
     {
-      name: 'auth-storage', // Ключ у localStorage
+      name: "auth-storage",
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );
