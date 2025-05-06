@@ -29,7 +29,6 @@ const AppRouter = () => {
       <Route path="/oauth-success" element={<OAuthSuccess />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/oauth-success" element={<OAuthSuccess />} />
     </Routes>
   );
 };
