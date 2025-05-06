@@ -6,7 +6,8 @@ import { login, register } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { motion } from "framer-motion";
-import { Apple } from "lucide-react"; // lucide-react вже є
+import ButtonGoogle from "./ButtonGoogle";
+import ButtonApple from "./ButtonApple";
 
 type Props = {
   type: "login" | "register";
@@ -98,28 +99,14 @@ const AuthForm = ({ type }: Props) => {
       <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
         або продовжити через
       </div>
-
       <div className="flex flex-col gap-2">
-        <Button
-          type="button"
-          className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600"
-          variant="outline"
+        <ButtonGoogle
           onClick={() => {
             window.location.href =
               "https://tyusha-server.onrender.com/api/auth/google/login";
           }}
-        >
-          <img src="/google-icon.svg" alt="Google" className="w-5 h-5" />
-          Продовжити через Google
-        </Button>
-        <Button
-          type="button"
-          className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600"
-          variant="outline"
-          onClick={() => toast("Apple auth ще не реалізовано")}
-        >
-          <Apple size={20} /> Продовжити через Apple
-        </Button>
+        />
+        <ButtonApple onClick={() => toast("Apple auth ще не реалізовано")} />
       </div>
     </motion.form>
   );
