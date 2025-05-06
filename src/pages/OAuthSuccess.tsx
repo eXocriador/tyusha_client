@@ -1,30 +1,24 @@
 import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../hooks/useAuthStore";
-import { toast } from "sonner";
 
 const OAuthSuccess = () => {
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { setToken } = useAuthStore();
 
   useEffect(() => {
-    const token = searchParams.get("token");
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
     if (token) {
       setToken(token);
-      toast.success("Успішний вхід через Google!");
       navigate("/dashboard");
     } else {
-      toast.error("Не вдалося авторизуватись через Google");
       navigate("/login");
     }
-  }, [searchParams, setToken, navigate]);
+  }, [navigate, setToken]);
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <p className="text-lg">Авторизація через Google... Зачекайте...</p>
-    </div>
-  );
+  return <p>Авторизація успішна... Перенаправляємо в кабінет</p>;
 };
 
 export default OAuthSuccess;
