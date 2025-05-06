@@ -1,19 +1,11 @@
 import { useAuthStore } from "../hooks/useAuthStore";
 import { Button } from "../components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const Dashboard = () => {
   const token = useAuthStore((state) => state.token);
   const setToken = useAuthStore((state) => state.setToken);
   const navigate = useNavigate();
-
-  // Авто-редірект якщо токен втрачено
-  useEffect(() => {
-    if (!token) {
-      navigate("/");
-    }
-  }, [token, navigate]);
 
   const user = {
     name: "Іван Петренко",

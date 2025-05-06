@@ -13,7 +13,10 @@ const NavBar = ({ onAuthOpen, onAuthTypeChange }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { token, setToken } = useAuthStore();
+
+  const token = useAuthStore((state) => state.token);
+  const setToken = useAuthStore((state) => state.setToken);
+
   const { theme, toggleTheme } = useTheme();
 
   const navItems = [
@@ -49,7 +52,7 @@ const NavBar = ({ onAuthOpen, onAuthTypeChange }: Props) => {
 
         {!token ? (
           <Button
-            variant="default"
+            variant="outline"
             onClick={() => {
               onAuthTypeChange("login");
               onAuthOpen(true);
@@ -78,10 +81,9 @@ const NavBar = ({ onAuthOpen, onAuthTypeChange }: Props) => {
         </Button>
       </div>
 
-      {/* Mobile burger button */}
       <div className="md:hidden">
         <Button
-          variant="ghost"
+          variant="outline"
           size="icon"
           onClick={() => {
             onAuthTypeChange("login");
