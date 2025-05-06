@@ -12,6 +12,10 @@ const AppRouter = () => {
     setHydrated(true);
   }, []);
 
+  useEffect(() => {
+    console.log("TOKEN in AppRouter:", token);
+  }, [token]);
+
   if (!hydrated) {
     return null;
   }

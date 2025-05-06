@@ -3,9 +3,16 @@ import axios from "axios";
 const API_URL = "https://tyusha-server.onrender.com/api/auth"; // змінити на свій бекенд
 
 export const login = async (email: string, password: string) => {
-  const response = await axios.post(`${API_URL}/login`, { email, password });
-  return response.data;
+  const response = await axios.post(`${API_URL}/auth/login`, {
+    email,
+    password
+  });
+
+  console.log("login response:", response.data); // ДОДАТИ ЦЕ
+
+  return response.data; // має містити token
 };
+
 
 export const register = async (email: string, password: string) => {
   const response = await axios.post(`${API_URL}/register`, { email, password });

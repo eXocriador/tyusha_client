@@ -43,6 +43,8 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
           ? await login(email, password)
           : await register(email, password);
 
+      console.log("TOKEN FROM SERVER:", data.token); // ДОДАТИ
+
       if (data.token) {
         setToken(data.token);
         toast.success(
