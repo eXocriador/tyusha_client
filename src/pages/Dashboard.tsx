@@ -6,11 +6,10 @@ const Dashboard = () => {
   const { token, setToken } = useAuthStore();
   const navigate = useNavigate();
 
-  // ТУТ ПОКИ МІСЦЕВІ МОКОВІ ДАНІ
+  // Тут пізніше підтягнемо реальні дані з бекенду:
   const user = {
     name: "Іван Петренко",
-    email: "ivan.petrenko@example.com",
-    hasPassword: true // якщо false — кнопка "Додати пароль"
+    email: "ivan.petrenko@example.com"
   };
 
   const logout = () => {
@@ -19,20 +18,25 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center px-4 bg-muted">
-      <h1 className="text-3xl font-bold">Ваш кабінет</h1>
-      <div className="bg-card p-6 rounded-lg shadow-md space-y-4 max-w-sm w-full">
+    <div className="flex flex-col items-center justify-center min-h-screen gap-4 px-4">
+      <div className="bg-card p-8 rounded-lg shadow-lg max-w-md w-full space-y-4">
+        <h2 className="text-2xl font-bold text-center">Ваш кабінет</h2>
         <p>
-          <strong>Імʼя:</strong> Іван Петренко
+          <strong>Імʼя:</strong> {user.name}
         </p>
         <p>
-          <strong>Email:</strong> ivan.petrenko@example.com
+          <strong>Email:</strong> {user.email}
         </p>
-        <Button variant="outline" className="w-full">
-          Редагувати дані
-        </Button>
-        <Button variant="outline" className="w-full">
-          Змінити пароль
+        <div className="space-y-2">
+          <Button variant="outline" className="w-full">
+            Редагувати дані
+          </Button>
+          <Button variant="outline" className="w-full">
+            Змінити пароль
+          </Button>
+        </div>
+        <Button variant="destructive" onClick={logout} className="w-full">
+          Вийти з облікового запису
         </Button>
       </div>
     </div>

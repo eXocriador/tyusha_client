@@ -4,20 +4,24 @@ import { motion } from "framer-motion";
 
 const Home = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center px-4 bg-muted">
+    <div className="relative flex flex-col items-center justify-center min-h-screen px-4 text-center bg-muted overflow-hidden">
+      {/* Фон */}
+      <div className="absolute inset-0 bg-hero-pattern z-0"></div>
+
+      {/* Контент */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="max-w-xl p-6 rounded-lg bg-card shadow-lg"
+        className="bg-card p-8 rounded-lg shadow-lg max-w-md w-full space-y-4 z-10 relative"
       >
-        <h1 className="text-4xl font-bold mb-4">Вітаємо у Tyusha!</h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-4">
-          <Link to="/login" className="text-primary hover:underline">
+        <h1 className="text-4xl font-bold">Вітаємо у Tyusha!</h1>
+        <p className="text-muted-foreground">
+          <Link to="/login" className="underline hover:text-primary">
             Увійдіть
           </Link>{" "}
           або{" "}
-          <Link to="/register" className="text-primary hover:underline">
+          <Link to="/register" className="underline hover:text-primary">
             зареєструйтесь
           </Link>
           , щоб почати користуватись.

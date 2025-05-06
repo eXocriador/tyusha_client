@@ -64,12 +64,12 @@ const AuthForm = ({ type }: Props) => {
   };
 
   return (
-    <motion.form
+    <form
       onSubmit={handleSubmit}
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="space-y-4 bg-card p-8 rounded-xl shadow-lg w-full max-w-md"
+      className="space-y-4"
     >
       <h2 className="text-2xl font-semibold text-center mb-4">
         {type === "login" ? "Вхід" : "Реєстрація"}
@@ -112,7 +112,7 @@ const AuthForm = ({ type }: Props) => {
         />
         <ButtonApple onClick={() => toast("Apple auth ще не реалізовано")} />
       </div>
-    </motion.form>
+    </form>
   );
 };
 

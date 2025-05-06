@@ -1,34 +1,24 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import OAuthSuccess from "../pages/OAuthSuccess";
+import Auth from "../pages/Auth";
 import { useAuthStore } from "../hooks/useAuthStore";
 
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { token } = useAuthStore();
-  if (!token) {
-    return <Navigate to="/login" replace />;
-  }
-  return <>{children}</>;
-};
-
 const AppRouter = () => {
+  const { token } = useAuthStore();
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
+        path="/auth"
+        element={!token ? <Auth /> : <Navigate to="/dashboard" />}
       />
-      <Route path="/oauth-success" element={<OAuthSuccess />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route
+        path="/dashboard"
+        element={token ? <Dashboard /> : <Navigate to="/" />}
+      />
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { useTheme } from "../../hooks/useTheme";
 import { Button } from "../ui/button";
-import { Sun, Moon } from "lucide-react";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,18 +11,18 @@ const NavBar = () => {
   const { token, setToken } = useAuthStore();
   const { theme, toggleTheme } = useTheme();
 
-  const logout = () => {
-    setToken(null);
-    navigate("/");
-  };
-
   const navItems = [
     { path: "/", label: "Головна" },
     { path: "/dashboard", label: "Кабінет" }
   ];
 
+  const logout = () => {
+    setToken(null);
+    navigate("/");
+  };
+
   return (
-    <nav className="flex items-center justify-between px-4 py-3 border-b shadow-sm bg-background">
+    <nav className="flex items-center justify-between px-4 py-3 border-b bg-background shadow-sm relative">
       <Link to="/" className="text-xl font-bold">
         Tyusha
       </Link>
@@ -33,7 +32,7 @@ const NavBar = () => {
           <Link
             key={path}
             to={path}
-            className={`px-2 py-1 rounded ${
+            className={`px-2 py-1 rounded-md ${
               location.pathname === path
                 ? "font-semibold border-b-2 border-primary"
                 : "text-muted-foreground"
@@ -43,20 +42,29 @@ const NavBar = () => {
           </Link>
         ))}
 
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleTheme}
-          className="transition-colors"
-        >
-          {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
-        </Button>
-
-        {token && (
-          <Button variant="outline" size="sm" onClick={logout}>
+        {!token ? (
+          <Button variant="outline" onClick={() => navigate("/auth")}>
+            Вхід / Реєстрація
+          </Button>
+        ) : (
+          <Button
+            onClick={logout}
+            variant="destructive"
+            size="sm"
+            className="ml-2"
+          >
             Вийти
           </Button>
         )}
+
+        <Button
+          onClick={toggleTheme}
+          size="icon"
+          variant="ghost"
+          className="hover:scale-110 transition-transform"
+        >
+          {theme === "light" ? "🌙" : "☀️"}
+        </Button>
       </div>
     </nav>
   );

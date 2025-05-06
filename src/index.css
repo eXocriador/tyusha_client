@@ -104,3 +104,29 @@
 .home-auth-link:focus-visible {
   @apply text-primary underline;
 }
+
+.bg-hero-pattern {
+  background-image: url("/hero-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  filter: blur(2px);
+  opacity: 0.3;
+}
+
+/* Для виправлення блимань Hero */
+.hero-animate {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+}
