@@ -69,7 +69,7 @@ const AuthForm = ({ type }: Props) => {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="space-y-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-md mx-auto"
+      className="space-y-4 bg-card p-8 rounded-xl shadow-lg w-full max-w-md"
     >
       <h2 className="text-2xl font-semibold text-center mb-4">
         {type === "login" ? "Вхід" : "Реєстрація"}
@@ -86,7 +86,11 @@ const AuthForm = ({ type }: Props) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+      <Button
+        type="submit"
+        className="w-full text-white"
+        disabled={isSubmitting}
+      >
         {isSubmitting
           ? type === "login"
             ? "Входимо..."
