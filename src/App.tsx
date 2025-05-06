@@ -9,29 +9,26 @@ function App() {
   const [authOpen, setAuthOpen] = useState(false);
   const [authType, setAuthType] = useState<"login" | "register">("login");
 
-  // Блокування скролу
   useEffect(() => {
     document.body.style.overflow = authOpen ? "hidden" : "";
   }, [authOpen]);
 
   return (
-    <div className="relative min-h-screen bg-muted">
-      {/* Фон */}
-      <div className="absolute inset-0 bg-hero-pattern z-0" />
-
-      {/* Контент */}
-      <div className="relative z-10 font-sans max-w-4xl mx-auto px-4">
-        <NavBar onAuthOpen={setAuthOpen} onAuthTypeChange={setAuthType} />
-        <AppRouter />
-        <Toaster />
+    <>
+      <div className="relative min-h-screen bg-muted overflow-hidden">
+        <div className="absolute inset-0 bg-hero-pattern z-0" />
+        <div className="relative z-10 font-sans max-w-4xl mx-auto px-4">
+          <NavBar onAuthOpen={setAuthOpen} onAuthTypeChange={setAuthType} />
+          <AppRouter />
+          <Toaster />
+        </div>
       </div>
 
-      {/* Модалка */}
       <Dialog.Root open={authOpen} onOpenChange={setAuthOpen}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-md transition-opacity z-20" />
+          <Dialog.Overlay className="fixed inset-0 backdrop-blur-md bg-black/50 data-[state=open]:animate-fadeIn z-40" />
           <Dialog.Content
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-w-md w-full z-30 data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-card p-6 rounded-xl max-w-md w-full shadow-xl data-[state=open]:animate-fadeIn z-50"
             onOpenAutoFocus={(e) => e.preventDefault()}
           >
             <Dialog.Title className="sr-only">
@@ -45,7 +42,7 @@ function App() {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-    </div>
+    </>
   );
 }
 

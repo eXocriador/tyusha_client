@@ -77,6 +77,19 @@ const NavBar = ({ onAuthOpen, onAuthTypeChange }: Props) => {
           {theme === "light" ? "🌙" : "☀️"}
         </Button>
       </div>
+      {/* Mobile burger button */}
+      <div className="md:hidden">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => {
+            onAuthTypeChange("login");
+            onAuthOpen(true);
+          }}
+        >
+          ☰
+        </Button>
+      </div>
     </nav>
   );
 };

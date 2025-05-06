@@ -33,17 +33,18 @@
   }
 }
 
+/* Hero */
 .bg-hero-pattern {
   background-image: url("/hero-background.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: scroll; /* 🛠 Виправлено щоб фон не вилазив */
+  background-attachment: scroll;
   filter: blur(2px);
   opacity: 0.3;
 }
 
-/* Анімація для модалки */
+/* Анімації */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -55,41 +56,75 @@
   }
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-}
-
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
-.animate-fadeOut {
-  animation: fadeOut 0.3s ease-in forwards;
+/* Google Button */
+.gsi-material-button {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 20px;
+  color: #1f1f1f;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transition: background-color 0.2s;
 }
 
-.radix-dialog-overlay {
-  backdrop-filter: blur(8px);
-  background-color: rgba(0, 0, 0, 0.4);
-  position: fixed;
-  inset: 0;
-  z-index: 50;
+.gsi-material-button:hover {
+  background-color: #e6e6e6;
 }
 
-[data-state="open"] {
-  animation: fadeIn 0.3s ease-out forwards;
+/* Apple Button */
+.apple-signin-button {
+  background-color: black;
+  color: white;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  height: 48px;
+  width: 100%;
+  transition: background-color 0.2s;
 }
 
-[data-state="closed"] {
-  animation: fadeOut 0.2s ease-in forwards;
+.apple-signin-button:hover {
+  background-color: #222;
 }
 
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  /* position: static; ВАЖЛИВО! Ніякого relative чи transform */
+}
+
+/* bg-hero-pattern вже ок */
+.bg-hero-pattern {
+  background-image: url("/hero-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  filter: blur(2px);
+  opacity: 0.3;
+}
+
+/* Модалка і overlay */
 [data-state="open"] {
   animation: fadeIn 0.3s ease-out forwards;
 }
@@ -118,37 +153,4 @@
     opacity: 0;
     transform: translate(-50%, -52%);
   }
-}
-
-/* GOOGLE */
-.gsi-material-button {
-  background-color: #f2f2f2;
-  border: none;
-  border-radius: 20px;
-  color: #1f1f1f;
-  font-family: "Roboto", Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  height: 48px;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.apple-signin-button {
-  background-color: black;
-  color: white;
-  border-radius: 12px;
-  padding: 12px 24px;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  justify-content: center;
-  height: 48px;
-  width: 100%;
 }
