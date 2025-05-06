@@ -15,6 +15,9 @@ type Props = {
 
 const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
+// ГОЛОВНЕ! Визначаємо MotionForm
+const MotionForm = motion.form;
+
 const AuthForm = ({ type }: Props) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -49,9 +52,13 @@ const AuthForm = ({ type }: Props) => {
         }
       } else {
         const data = await register(email, password);
-        setToken(data.token);
-        toast.success("Реєстрація успішна!");
-        navigate("/dashboard");
+        if (data.token) {
+          setToken(data.token);
+          toast.success("Реєстрація успішна!");
+          navigate("/dashboard");
+        } else {
+          toast.error("Сервер не повернув токен");
+        }
       }
     } catch (error: any) {
       console.error("Помилка:", error);
@@ -64,12 +71,12 @@ const AuthForm = ({ type }: Props) => {
   };
 
   return (
-    <form
+    <MotionForm
       onSubmit={handleSubmit}
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="space-y-4"
+      className="space-y-4 bg-card p-8 rounded-xl shadow-lg w-full max-w-md"
     >
       <h2 className="text-2xl font-semibold text-center mb-4">
         {type === "login" ? "Вхід" : "Реєстрація"}
@@ -112,7 +119,7 @@ const AuthForm = ({ type }: Props) => {
         />
         <ButtonApple onClick={() => toast("Apple auth ще не реалізовано")} />
       </div>
-    </form>
+    </MotionForm>
   );
 };
 

@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen px-4 text-center bg-muted overflow-hidden">
       {/* Фон */}
-      <div className="absolute inset-0 bg-hero-pattern z-0"></div>
+      <div className="absolute inset-0 bg-hero-pattern z-0 hero-animate"></div>
 
       {/* Контент */}
       <motion.div
