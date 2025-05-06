@@ -69,11 +69,9 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
       onSubmit={handleSubmit}
       className="space-y-4 bg-card p-6 rounded-xl shadow-lg w-full max-w-md"
     >
-      <Dialog.Title asChild>
-        <h2 className="text-xl font-semibold text-center">
-          {type === "login" ? "Вхід" : "Реєстрація"}
-        </h2>
-      </Dialog.Title>
+      <h2 className="text-xl font-semibold text-center">
+        {type === "login" ? "Вхід" : "Реєстрація"}
+      </h2>
 
       <Input
         type="email"

@@ -48,9 +48,9 @@ body::before {
   background-image: url("/hero-background.png");
   background-size: cover;
   background-position: center;
-  filter: blur(2px);
-  opacity: 0.3;
-  z-index: -1;
+  filter: blur(1.5px); /* Зменшив, щоб не був занадто замилений */
+  opacity: 0.2; /* Зробив прозорішим, щоб не дублювалось з Overlay */
+  z-index: 0;
 }
 
 /* Google */

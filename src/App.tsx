@@ -26,14 +26,11 @@ function App() {
       {/* Модалка */}
       <Dialog.Root open={authOpen} onOpenChange={setAuthOpen}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 backdrop-blur-md bg-black/50 data-[state=open]:animate-fadeIn z-40" />
+          <Dialog.Overlay className="fixed inset-0 backdrop-blur-sm bg-black/50 z-40 data-[state=open]:animate-fadeIn" />
           <Dialog.Content
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-card p-6 rounded-xl max-w-md w-full shadow-xl z-50 focus:outline-none animate-fadeIn"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-0 z-50 focus:outline-none data-[state=open]:animate-fadeIn"
             onOpenAutoFocus={(e) => e.preventDefault()}
           >
-            <Dialog.Title className="sr-only">
-              {authType === "login" ? "Вхід" : "Реєстрація"}
-            </Dialog.Title>
             <AuthForm
               type={authType}
               onTypeChange={setAuthType}

@@ -49,7 +49,7 @@ const NavBar = ({ onAuthOpen, onAuthTypeChange }: Props) => {
 
         {!token ? (
           <Button
-            variant="outline"
+            variant="default"
             onClick={() => {
               onAuthTypeChange("login");
               onAuthOpen(true);
@@ -77,10 +77,11 @@ const NavBar = ({ onAuthOpen, onAuthTypeChange }: Props) => {
           {theme === "light" ? "🌙" : "☀️"}
         </Button>
       </div>
+
       {/* Mobile burger button */}
       <div className="md:hidden">
         <Button
-          variant="outline"
+          variant="ghost"
           size="icon"
           onClick={() => {
             onAuthTypeChange("login");
