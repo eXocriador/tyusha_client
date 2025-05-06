@@ -4,7 +4,7 @@ import Dashboard from "../pages/Dashboard";
 import { useAuthStore } from "../hooks/useAuthStore";
 
 const AppRouter = () => {
-  const { token } = useAuthStore();
+  const token = useAuthStore((state) => state.token);
 
   return (
     <Routes>

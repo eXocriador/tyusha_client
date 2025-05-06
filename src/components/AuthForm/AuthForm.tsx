@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import ButtonGoogle from "./ButtonGoogle";
 import ButtonApple from "./ButtonApple";
-import * as Dialog from "@radix-ui/react-dialog";
 
 type Props = {
   type: "login" | "register";
@@ -39,7 +38,6 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
 
     try {
       setIsSubmitting(true);
-
       const data =
         type === "login"
           ? await login(email, password)
@@ -65,11 +63,8 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-4 bg-card p-6 rounded-xl shadow-lg w-full max-w-md"
-    >
-      <h2 className="text-xl font-semibold text-center">
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <h2 className="text-2xl font-bold text-center" id="auth-description">
         {type === "login" ? "Вхід" : "Реєстрація"}
       </h2>
 
@@ -85,7 +80,12 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+
+      <Button
+        type="submit"
+        className="w-full h-12 text-base font-semibold"
+        disabled={isSubmitting}
+      >
         {isSubmitting
           ? type === "login"
             ? "Входимо..."
