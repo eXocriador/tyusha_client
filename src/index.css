@@ -90,3 +90,13 @@
 .apple-signin-button:hover {
   background-color: #222;
 }
+
+.home-auth-link:hover {
+  @apply text-primary underline;
+}
+.home-auth-link:focus {
+  @apply text-primary underline;
+}
+.home-auth-link:focus-visible {
+  @apply text-primary underline;
+}
