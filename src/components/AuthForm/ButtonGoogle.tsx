@@ -15,7 +15,11 @@ const ButtonGoogle = ({ onClick }: Props) => {
         width="24"
         height="24"
       >
-        {/* Google icon paths */}
+        <path
+          fill="#EA4335"
+          d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0..."
+        />
+        {/* Інші частини іконки */}
       </svg>
       <span>Увійти через Google</span>
     </button>

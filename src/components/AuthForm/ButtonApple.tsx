@@ -16,7 +16,7 @@ const ButtonApple = ({ onClick }: Props) => {
         viewBox="0 0 384 512"
         fill="currentColor"
       >
-        {/* Apple icon path */}
+        <path d="M318.7 268.7c-.3-49.9 40.9-73.8 42.7-75..." />
       </svg>
       <span>Увійти через Apple</span>
     </button>

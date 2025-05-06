@@ -64,7 +64,7 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <h2 className="text-2xl font-bold text-center" id="auth-description">
+      <h2 className="text-3xl font-bold text-center" id="auth-description">
         {type === "login" ? "Вхід" : "Реєстрація"}
       </h2>
 
@@ -73,17 +73,19 @@ const AuthForm = ({ type, onTypeChange, onClose }: Props) => {
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        className="h-12 text-base"
       />
       <Input
         type="password"
         placeholder="Пароль"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        className="h-12 text-base"
       />
 
       <Button
         type="submit"
-        className="w-full h-12 text-base font-semibold"
+        className="w-full h-12 text-lg font-semibold"
         disabled={isSubmitting}
       >
         {isSubmitting
