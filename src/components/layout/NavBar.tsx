@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { useTheme } from "../../hooks/useTheme";
 import { Button } from "../ui/button";
+import { Sun, Moon } from "lucide-react";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,13 +19,7 @@ const NavBar = () => {
 
   const navItems = [
     { path: "/", label: "Головна" },
-    { path: "/dashboard", label: "Кабінет" },
-    ...(token
-      ? []
-      : [
-          { path: "/login", label: "Увійти" },
-          { path: "/register", label: "Реєстрація" }
-        ])
+    { path: "/dashboard", label: "Кабінет" }
   ];
 
   return (
@@ -38,31 +33,27 @@ const NavBar = () => {
           <Link
             key={path}
             to={path}
-            className={`${
+            className={`px-2 py-1 rounded ${
               location.pathname === path
                 ? "font-semibold border-b-2 border-primary"
                 : "text-muted-foreground"
-            } hover:text-primary`}
+            } hover:text-primary transition-colors`}
           >
             {label}
           </Link>
         ))}
 
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={toggleTheme}
-          className="ml-4 px-3 py-1 rounded-md border text-sm hover:bg-muted transition"
-          title="Змінити тему"
+          className="transition-colors"
         >
-          {theme === "light" ? "🌙 Темна" : "☀️ Світла"}
-        </button>
+          {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+        </Button>
 
         {token && (
-          <Button
-            variant="destructive"
-            size="sm"
-            className="ml-4"
-            onClick={logout}
-          >
+          <Button variant="outline" size="sm" onClick={logout}>
             Вийти
           </Button>
         )}

@@ -19,27 +19,22 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-6 px-4 text-center">
+    <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center px-4 bg-muted">
       <h1 className="text-3xl font-bold">Ваш кабінет</h1>
-
-      <div className="bg-card rounded-xl shadow p-6 w-full max-w-md space-y-4 text-left">
-        <div>
-          <span className="font-semibold">Імʼя:</span> {user.name}
-        </div>
-        <div>
-          <span className="font-semibold">Email:</span> {user.email}
-        </div>
+      <div className="bg-card p-6 rounded-lg shadow-md space-y-4 max-w-sm w-full">
+        <p>
+          <strong>Імʼя:</strong> Іван Петренко
+        </p>
+        <p>
+          <strong>Email:</strong> ivan.petrenko@example.com
+        </p>
         <Button variant="outline" className="w-full">
           Редагувати дані
         </Button>
         <Button variant="outline" className="w-full">
-          {user.hasPassword ? "Змінити пароль" : "Додати пароль"}
+          Змінити пароль
         </Button>
       </div>
-
-      <Button variant="destructive" onClick={logout}>
-        Вийти з облікового запису
-      </Button>
     </div>
   );
 };
